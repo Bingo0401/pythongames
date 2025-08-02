@@ -119,8 +119,8 @@ while True:
     
     cpu_score_surface = score_font.render(str(cpu_points), True, "white")
     player_score_surface = score_font.render(str(player_points), True, "white")
-    screen.blit(cpu_score_surface, (SCREEN_WIDTH * 3/4 - cpu_score_surface.get_width() / 2, 50))
-    screen.blit(player_score_surface, (SCREEN_WIDTH * 1/4 - player_score_surface.get_width() / 2, 50))
+    screen.blit(cpu_score_surface, (SCREEN_WIDTH * 3/4 - cpu_score_surface.get_width() / 2, 25))
+    screen.blit(player_score_surface, (SCREEN_WIDTH * 1/4 - player_score_surface.get_width() / 2, 25))
     
     pygame.draw.aaline(screen, "white", (SCREEN_WIDTH/2, 0), (SCREEN_WIDTH/2, SCREEN_HEIGHT))        
     pygame.draw.circle(screen, "white", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 100, 5)       
