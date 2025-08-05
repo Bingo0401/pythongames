@@ -12,7 +12,7 @@ GAME_TITLE = "PONG"
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption(GAME_TITLE)
-clock = pygame.time.Clock()    
+clock = pygame.time.Clock()
 
 
 cpu_points, player_points = 0, 0
@@ -60,16 +60,92 @@ class Paddle:
         pygame.draw.rect(screen, "white", self.rect)  
 
 
+
+
+
+score_font = pygame.font.Font(None, 100)
+small_font = pygame.font.Font(None, 50)
+
+demo_ball = Ball(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 15, 6, 6)
+demo_player_paddle = Paddle(0, SCREEN_HEIGHT/2, 20, 100, 0)
+demo_cpu = Paddle(SCREEN_WIDTH - 20, SCREEN_HEIGHT/2, 20, 100, 0)
+
+
+running_demo = True
+
+#demo
+while running_demo:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+                
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                running_demo = False
+                
+    if demo_ball.rect.x < SCREEN_WIDTH/2:
+        if demo_ball.rect.y > demo_player_paddle.rect.y:
+            demo_player_paddle.speed_y = 6
+        if demo_ball.rect.y < demo_player_paddle.rect.y:
+            demo_player_paddle.speed_y = -6
+    else:
+        demo_player_paddle.speed_y = 0             
+                
+    if demo_ball.rect.x > SCREEN_WIDTH/2:
+        if demo_ball.rect.y > demo_cpu.rect.y:
+            demo_cpu.speed_y = 6
+        if demo_ball.rect.y < demo_cpu.rect.y:
+            demo_cpu.speed_y = -6
+    else:
+        demo_cpu.speed_y = 0                        
+
+    if demo_ball.rect.colliderect(demo_cpu.rect) or demo_ball.rect.colliderect(demo_player_paddle.rect):
+        demo_ball.speed_x *= -1
+                
+                
+                
+                
+    demo_ball.Update()
+    demo_player_paddle.Update()
+    demo_cpu.Update()
+                
+    
+    
+    screen.fill("darkgreen")
+    pygame.draw.rect(screen, "forestgreen", (0, 0, SCREEN_WIDTH // 2, SCREEN_HEIGHT))
+    
+    cpu_score_surface = score_font.render(str(cpu_points), True, "white")
+    player_score_surface = score_font.render(str(player_points), True, "white")
+    screen.blit(cpu_score_surface, (SCREEN_WIDTH * 3/4 - cpu_score_surface.get_width() / 2, 50))
+    screen.blit(player_score_surface, (SCREEN_WIDTH * 1/4 - player_score_surface.get_width() / 2, 50))
+    instructions_surface = small_font.render("[W]UP  [S]DOWN", True, "white")
+    space_prompt_surface = small_font.render("Press SPACE to begin", True, "white")
+
+    screen.blit(instructions_surface, ((SCREEN_WIDTH - instructions_surface.get_width()) // 2, SCREEN_HEIGHT - 100))
+    screen.blit(space_prompt_surface, ((SCREEN_WIDTH - space_prompt_surface.get_width()) // 2, SCREEN_HEIGHT - 160))
+            
+    pygame.draw.aaline(screen, "white", (SCREEN_WIDTH/2, 0), (SCREEN_WIDTH/2, SCREEN_HEIGHT))        
+    pygame.draw.circle(screen, "white", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 100, 5)       
+    demo_ball.Draw()           
+    demo_cpu.Draw()   
+    demo_player_paddle.Draw()       
+            
+    pygame.display.update()        
+    clock.tick(60)
+
+
+
 ball = Ball(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 15, 6, 6)
 player_paddle = Paddle(0, SCREEN_HEIGHT/2, 20, 100, 0)
 cpu = Paddle(SCREEN_WIDTH - 20, SCREEN_HEIGHT/2, 20, 100, 0)
 
-
-score_font = pygame.font.Font(None, 100)
-
-
-
-
+cpu_points, player_points = 0, 0
+#game
 while True:
     
     
@@ -119,8 +195,8 @@ while True:
     
     cpu_score_surface = score_font.render(str(cpu_points), True, "white")
     player_score_surface = score_font.render(str(player_points), True, "white")
-    screen.blit(cpu_score_surface, (SCREEN_WIDTH * 3/4 - cpu_score_surface.get_width() / 2, 25))
-    screen.blit(player_score_surface, (SCREEN_WIDTH * 1/4 - player_score_surface.get_width() / 2, 25))
+    screen.blit(cpu_score_surface, (SCREEN_WIDTH * 3/4 - cpu_score_surface.get_width() / 2, 50))
+    screen.blit(player_score_surface, (SCREEN_WIDTH * 1/4 - player_score_surface.get_width() / 2, 50))
     
     pygame.draw.aaline(screen, "white", (SCREEN_WIDTH/2, 0), (SCREEN_WIDTH/2, SCREEN_HEIGHT))        
     pygame.draw.circle(screen, "white", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 100, 5)       
