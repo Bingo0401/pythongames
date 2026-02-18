@@ -1,0 +1,21 @@
+{
+  "name": "pythongames",
+  "version": "1.0.0",
+  "description": "Some games I made in Python",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bingo0401/pythongames.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Bingo0401/pythongames/issues"
+  },
+  "homepage": "https://github.com/Bingo0401/pythongames#readme"
+}
